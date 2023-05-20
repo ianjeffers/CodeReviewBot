@@ -35,7 +35,11 @@ export default async function handler(req, res) {
 
     const issues = response.data.choices[0].message.content
       .split('\n')
-      .filter((line) => line.length > 0);
+      .filter((line) => line.length > 0)
+      .map((issue, index) => ({
+        lineNumber: index + 1,
+        issue,
+      }));
 
     res.status(200).json({ issues });
   } catch (error) {
